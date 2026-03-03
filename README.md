@@ -21,11 +21,9 @@ Ejemplos en este repo:
 
 ## Integración en la app
 
-La app puede cargar este repo desde el árbol de `localStorage` en la clave:
+Actualmente, la core app mantiene una lista hardcodeada de renderers permitidos y valida su clave canónica (`publisher/repository:kind/tool@major`) antes de cargarlos.
 
-- `luxsequencer.marketplace.tree.v1`
-
-Cada tool debe incluir su `packageManifest` v1, `workerEntry` y metadatos de acceso.
+Cada tool debe incluir su `packageManifest` v1 y `runtime.workerEntry` válido.
 
 ## Servidor HTTP del marketplace (Vite + CORS)
 
@@ -43,4 +41,6 @@ Configuración aplicada:
 - `host: true` para acceso desde otras interfaces/red local
 - puerto fijo `4174`
 
-> Nota: este paso habilita la capa HTTP del repositorio marketplace. La publicación de workers transpilados y su resolución final desde la core app se realiza en el siguiente paso de integración runtime.
+En desarrollo, la core app consume workers desde una ruta proxied same-origin (`/marketplace-core-renderers/...`) para evitar bloqueos de seguridad del constructor `Worker` entre distintos puertos/orígenes.
+
+> Nota: este repo publica los workers fuente (`*.worker.ts`) y la core app resuelve su carga en runtime mediante su configuración/proxy de desarrollo.
