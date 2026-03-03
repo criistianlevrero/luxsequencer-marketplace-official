@@ -1,0 +1,25 @@
+{
+  "publisherId": "luxsequencer",
+  "repositoryId": "core-renderers",
+  "version": "0.1.0-beta.1",
+  "tools": [
+    {
+      "kind": "renderer",
+      "name": "Escamas WebGL",
+      "key": "luxsequencer/core-renderers:renderer/webgl@1",
+      "manifestPath": "./renderers/webgl/manifest.json"
+    },
+    {
+      "kind": "renderer",
+      "name": "Concéntrico",
+      "key": "luxsequencer/core-renderers:renderer/concentric@1",
+      "manifestPath": "./renderers/concentric/manifest.json"
+    },
+    {
+      "kind": "renderer",
+      "name": "DVD Screensaver",
+      "key": "luxsequencer/core-renderers:renderer/dvd-screensaver@1",
+      "manifestPath": "./renderers/dvd-screensaver/manifest.json"
+    }
+  ]
+}

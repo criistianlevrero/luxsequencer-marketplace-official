@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0.0",
+  "publisherId": "luxsequencer",
+  "repositoryId": "core-renderers",
+  "packageId": "builtin-renderers",
+  "packageVersion": "0.6.0-beta",
+  "tool": {
+    "kind": "renderer",
+    "id": "dvd-screensaver",
+    "versionMajor": 1
+  },
+  "source": "community",
+  "sdk": {
+    "minWorkerProtocolVersion": "1.0.0"
+  },
+  "security": {
+    "workerEntrySha256": "REPLACE_WITH_REAL_SHA256_HEX_64",
+    "workerEntrySignature": {
+      "algorithm": "ECDSA_P256_SHA256",
+      "publicKeyId": "REPLACE_PUBLIC_KEY_ID",
+      "valueBase64": "REPLACE_SIGNATURE_BASE64"
+    }
+  },
+  "runtime": {
+    "workerEntry": "./workers/dvd-screensaver.worker.js"
+  }
+}
