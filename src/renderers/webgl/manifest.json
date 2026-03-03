@@ -22,6 +22,6 @@
     }
   },
   "runtime": {
-    "workerEntry": "./workers/scales.worker.js"
+    "workerEntry": "./scales.worker.ts"
   }
 }

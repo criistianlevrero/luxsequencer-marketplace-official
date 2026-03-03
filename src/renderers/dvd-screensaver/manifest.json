@@ -22,6 +22,6 @@
     }
   },
   "runtime": {
-    "workerEntry": "./workers/dvd-screensaver.worker.js"
+    "workerEntry": "./dvd-screensaver.worker.ts"
   }
 }

@@ -22,6 +22,6 @@
     }
   },
   "runtime": {
-    "workerEntry": "./workers/concentric.worker.js"
+    "workerEntry": "./concentric.worker.ts"
   }
 }
