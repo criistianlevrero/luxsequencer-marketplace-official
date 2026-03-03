@@ -4,7 +4,13 @@
  */
 
 import type { RendererControlSpec, StandardControlSpec as _StandardControlSpec } from '../../../types/declarativeControls';
-import { DependencyConditions, CommonDependencies as _CommonDependencies, createDependencies as _createDependencies } from '../../declarative/dependencyUtils';
+
+const DependencyConditions = {
+  equals: (expectedValue: unknown) => (value: unknown) => value === expectedValue,
+  notEquals: (expectedValue: unknown) => (value: unknown) => value !== expectedValue,
+  greaterThan: (threshold: number) => (value: number) => value > threshold,
+  isTrue: (value: boolean) => value === true,
+};
 
 /**
  * WebGL renderer control specification using declarative system

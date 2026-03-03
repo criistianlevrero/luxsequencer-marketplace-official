@@ -1,5 +1,8 @@
 import type { RendererControlSpec } from '../../../types/declarativeControls';
-import { DependencyConditions } from '../../declarative/dependencyUtils';
+
+const DependencyConditions = {
+  equals: (expectedValue: unknown) => (value: unknown) => value === expectedValue,
+};
 
 export const dvdScreensaverDeclarativeSchema: RendererControlSpec = {
   standard: [
