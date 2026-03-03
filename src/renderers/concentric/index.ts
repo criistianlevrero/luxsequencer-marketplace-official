@@ -1,7 +1,6 @@
 
 import { RendererDefinition } from '../types';
 import ConcentricRenderer from './ConcentricRenderer';
-import { getConcentricSchema } from './concentric-schema';
 import { concentricDeclarativeSchema } from './concentric-declarative-schema';
 
 export const concentricRenderer: RendererDefinition = {
@@ -28,6 +27,6 @@ export const concentricRenderer: RendererDefinition = {
   workerRequirements: {
     requiredCapabilities: ['offscreen-canvas', 'canvas2d', 'uniform-updates'],
   },
-  controlSchema: getConcentricSchema,
+  controlSchema: [],
   declarativeSchema: concentricDeclarativeSchema,
 };
