@@ -5,6 +5,12 @@
   "description": "Marketplace repository for LuxSequencer core renderers",
   "type": "module",
   "scripts": {
-    "validate": "node ./scripts/validate-catalog.mjs"
+    "dev": "vite",
+    "preview": "vite preview",
+    "validate": "node ./scripts/validate-catalog.mjs",
+    "validate:catalog": "node ./scripts/validate-catalog.mjs"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
   }
 }
