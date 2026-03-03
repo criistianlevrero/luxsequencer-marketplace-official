@@ -21,7 +21,7 @@ Ejemplos en este repo:
 
 ## Integración en la app
 
-Actualmente, la core app mantiene una lista hardcodeada de renderers permitidos y valida su clave canónica (`publisher/repository:kind/tool@major`) antes de cargarlos.
+Actualmente, la core app mantiene una allowlist hardcodeada de renderers permitidos y valida su clave canónica (`publisher/repository:kind/tool@major`) antes de cargarlos.
 
 Cada tool debe incluir su `packageManifest` v1 y `runtime.workerEntry` válido.
 
@@ -41,6 +41,6 @@ Configuración aplicada:
 - `host: true` para acceso desde otras interfaces/red local
 - puerto fijo `4174`
 
-En desarrollo, la core app consume workers desde una ruta proxied same-origin (`/marketplace-core-renderers/...`) para evitar bloqueos de seguridad del constructor `Worker` entre distintos puertos/orígenes.
+En desarrollo, la core app consume workers desde una ruta proxy same-origin (`/marketplace-core-renderers/...`) para evitar bloqueos de seguridad del constructor `Worker` entre distintos puertos/orígenes.
 
 > Nota: este repo publica los workers fuente (`*.worker.ts`) y la core app resuelve su carga en runtime mediante su configuración/proxy de desarrollo.
