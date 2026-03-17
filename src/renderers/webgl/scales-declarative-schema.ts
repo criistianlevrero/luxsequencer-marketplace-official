@@ -3,7 +3,7 @@
  * Demonstrates advanced features of the declarative control system
  */
 
-import type { RendererControlSpec, StandardControlSpec as _StandardControlSpec } from '../../../types/declarativeControls';
+import type { RendererControlSpec } from '@luxsequencer/contracts/declarative-controls';
 
 const DependencyConditions = {
   equals: (expectedValue: unknown) => (value: unknown) => value === expectedValue,

@@ -6,9 +6,7 @@ Renderer oficial publicado por `core-renderers` y consumido por `luxsequencer-co
 
 - `dvd-screensaver.worker.ts`: implementación worker-only del renderer.
 - `dvd-screensaver-declarative-schema.ts`: esquema declarativo de controles.
-- `DvdScreensaverRenderer.tsx`: placeholder sin lógica de render (el render real vive en el worker).
 - `manifest.json`: identidad canónica y metadatos del tool.
-- `index.ts`: definición exportada para registro en catálogo.
 
 ## Identidad canónica
 

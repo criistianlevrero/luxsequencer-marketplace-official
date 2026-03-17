@@ -1,4 +1,4 @@
-import type { RendererControlSpec } from '../../../types/declarativeControls';
+import type { RendererControlSpec } from '@luxsequencer/contracts/declarative-controls';
 
 const DependencyConditions = {
   equals: (expectedValue: unknown) => (value: unknown) => value === expectedValue,

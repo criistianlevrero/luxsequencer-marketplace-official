@@ -64,6 +64,9 @@ luxsequencer-cloud/
 
 - `src/catalog.json`: catálogo del repo con herramientas publicadas.
 - `src/renderers/*/manifest.json`: manifest por renderer/tool.
+- `src/renderers/*/*.worker.ts`: implementación de runtime worker-only por renderer.
+
+No se incluyen componentes React de UI dentro de este repositorio; el runtime oficial es `workerEntry` + `manifest`.
 
 ## Clave canónica de herramienta
 
@@ -102,3 +105,43 @@ Configuración aplicada:
 En desarrollo, la core app consume workers desde una ruta proxy same-origin (`/marketplace-core-renderers/...`) para evitar bloqueos de seguridad del constructor `Worker` entre distintos puertos/orígenes.
 
 > Nota: este repo publica los workers fuente (`*.worker.ts`) y la core app resuelve su carga en runtime mediante su configuración/proxy de desarrollo.
+
+## Plan de contratos compartidos (core + cloud + marketplace)
+
+### Estado actual
+
+- `core-renderers` ya consume contratos compartidos desde `@luxsequencer/contracts` (dependencia local `file:../luxsequencer-contracts`).
+- `luxsequencer-core` mantiene su definición en `src/types/declarativeControls.ts`.
+- `luxsequencer-cloud` necesitará los mismos contratos para intercambio API y validación de payloads.
+- Se inicializó el repositorio `../luxsequencer-contracts` con estructura base (`declarativeControls`, `marketplace`, `api`) como punto de migración.
+
+### Objetivo
+
+Consolidar los tipos de dominio y contratos de integración en un paquete/repo dedicado (sugerido: `luxsequencer-contracts` o `@luxsequencer/contracts`) consumido por:
+
+- `luxsequencer-core`
+- `core-renderers`
+- `luxsequencer-cloud`
+
+### Fases propuestas
+
+1. **Extracción mínima de contratos**
+  - Mover tipos compartidos puros (schemas declarativos, manifests, catálogo, claves canónicas, payloads API) al nuevo repo.
+  - Evitar cualquier dependencia hacia estado/UI internos de cada app.
+
+2. **Versionado y compatibilidad**
+  - Publicar paquete versionado semánticamente (`0.x` beta, luego `1.x`).
+  - Definir política de compatibilidad de contratos entre apps (matriz de versiones soportadas).
+
+3. **Migración de consumidores**
+  - Reemplazar imports locales en `core`, `cloud` y `core-renderers` por imports del paquete compartido.
+  - Mantener adapters temporales donde haya diferencias de shape.
+
+4. **Validación runtime**
+  - Agregar validadores runtime en `core` y `cloud` (ej. JSON Schema o Zod) usando los mismos contratos para robustez en datos remotos.
+
+### Criterio de éxito
+
+- Una sola fuente de verdad para contratos compartidos.
+- Cero imports cruzados por path relativo entre repos.
+- `core`, `cloud` y `core-renderers` compilan/validan contra la misma versión de contratos.
