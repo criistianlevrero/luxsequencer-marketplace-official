@@ -11,7 +11,7 @@
     "validate:catalog": "node ./scripts/validate-catalog.mjs"
   },
   "devDependencies": {
-    "@luxsequencer/contracts": "file:../luxsequencer-contracts",
+    "@luxsequencer/contracts": "^0.1.0",
     "vite": "^6.2.0"
   }
 }
