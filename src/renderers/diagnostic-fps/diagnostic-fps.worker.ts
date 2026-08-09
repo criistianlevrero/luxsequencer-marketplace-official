@@ -19,8 +19,16 @@ const renderFrameIntervals: number[] = [];
 const dataIntervals: number[] = [];
 
 let previousRenderAtMs: number | null = null;
-let previousHeartbeatAtMs: number | null = null;
-let latestHeartbeatAtMs: number | null = null;
+
+// Two clocks are in play and they must not be mixed. `sentAtMs` values come from the main
+// thread's performance.now(); a worker's timeOrigin starts when the worker is created, so its
+// own now() is offset from the main thread's by however long the page ran first. Subtracting
+// one from the other yields a meaningless (and typically negative) number.
+//
+// Deltas between two main-thread timestamps are safe: the offset cancels. Anything measured
+// against the current instant has to use the worker clock, so arrivals are stamped locally.
+let previousSentAtMs: number | null = null;
+let latestArrivalAtMs: number | null = null;
 
 let targetFps = 60;
 let fpsSmoothingSamples = 45;
@@ -69,15 +77,16 @@ const format = (value: number | null, fractionDigits = 1): string => {
   return value.toFixed(fractionDigits);
 };
 
-const recordHeartbeat = (heartbeatAtMs: number) => {
-  latestHeartbeatAtMs = heartbeatAtMs;
-  if (previousHeartbeatAtMs !== null) {
-    const delta = heartbeatAtMs - previousHeartbeatAtMs;
+const recordHeartbeat = (sentAtMs: number) => {
+  latestArrivalAtMs = performance.now();
+
+  if (previousSentAtMs !== null) {
+    const delta = sentAtMs - previousSentAtMs;
     if (delta > 0 && delta < 5000) {
       pushSample(dataIntervals, delta, dataSmoothingSamples);
     }
   }
-  previousHeartbeatAtMs = heartbeatAtMs;
+  previousSentAtMs = sentAtMs;
 };
 
 const drawBackground = (context: OffscreenCanvasRenderingContext2D, width: number, height: number) => {
@@ -211,7 +220,7 @@ const drawScene = () => {
   const dataFps = dataAvgMs ? 1000 / dataAvgMs : null;
   const dataJitterMs = jitter(dataIntervals, dataAvgMs);
 
-  const sinceLastHeartbeatMs = latestHeartbeatAtMs === null ? null : now - latestHeartbeatAtMs;
+  const sinceLastHeartbeatMs = latestArrivalAtMs === null ? null : now - latestArrivalAtMs;
   const isHeartbeatStale = sinceLastHeartbeatMs !== null && sinceLastHeartbeatMs > stallThresholdMs;
 
   context2d.setTransform(1, 0, 0, -1, 0, canvas.height);
@@ -395,8 +404,8 @@ workerScope.onmessage = (event) => {
       canvas = null;
       context2d = null;
       previousRenderAtMs = null;
-      previousHeartbeatAtMs = null;
-      latestHeartbeatAtMs = null;
+      previousSentAtMs = null;
+      latestArrivalAtMs = null;
       latestPayloadBytes = 0;
       latestSignalCount = 0;
       latestSequence = 0;
