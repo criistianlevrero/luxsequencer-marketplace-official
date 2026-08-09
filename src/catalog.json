@@ -11,6 +11,12 @@
     },
     {
       "kind": "renderer",
+      "name": "Diagnóstico FPS/Data",
+      "key": "luxsequencer/core-renderers:renderer/diagnostic-fps@1",
+      "manifestPath": "./renderers/diagnostic-fps/manifest.json"
+    },
+    {
+      "kind": "renderer",
       "name": "Concéntrico",
       "key": "luxsequencer/core-renderers:renderer/concentric@1",
       "manifestPath": "./renderers/concentric/manifest.json"
